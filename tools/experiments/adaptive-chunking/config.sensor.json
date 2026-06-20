@@ -1,0 +1,53 @@
+{
+  "run_id": "sensor-adaptive-chunking",
+  "title": "Sensor Adaptive Chunking Evaluation",
+  "output_dir": "docs/experiments/artifacts/adaptive-chunking",
+  "documents": [
+    {
+      "document_id": "omron-e3z",
+      "source_path": "local-nas/projects/Demo/Sensor/Omron/Datasheet-cam-bien-tiem-can-Omron-E3Z-Series.pdf"
+    },
+    {
+      "document_id": "autonics-bms",
+      "source_path": "local-nas/projects/Demo/Sensor/Autonics/Sensorguong.pdf"
+    },
+    {
+      "document_id": "autonics-bf4",
+      "source_path": "local-nas/projects/Demo/Sensor/Autonics/Khuech dai quang Autonic.pdf"
+    }
+  ],
+  "candidate_terms": {
+    "BF4": ["BF4", "BF4 Series", "Autonics BF4", "BF4R", "BF4G"],
+    "BMS": ["BMS", "BMS Series", "Autonics BMS", "BMS2M", "BMS5M"],
+    "E3Z": ["E3Z", "E3Z-B", "E3Z-B61", "E3Z-B81", "Omron E3Z"]
+  },
+  "expected_terms": [
+    "chai nước",
+    "water bottle",
+    "plastic bottle",
+    "transparent bottle",
+    "clear object",
+    "transparent object",
+    "photoelectric sensor",
+    "retroreflective sensor",
+    "sensing target",
+    "sensing distance"
+  ],
+  "noise_terms": [
+    "mounting screw",
+    "zip tie",
+    "maintenance",
+    "cleaning",
+    "fork sensor",
+    "label detection",
+    "housing",
+    "dimension",
+    "cirtceleotohP"
+  ],
+  "chunking": {
+    "target_chars": 2200,
+    "overlap_chars": 220,
+    "max_chars": 4200
+  }
+}
+

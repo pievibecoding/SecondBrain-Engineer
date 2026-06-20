@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      target: development
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      - DEBUG=true
+
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev
+
+  nas-connector:
+    build:
+      context: ./nas-connector
+      target: development
+    volumes:
+      - ./nas-connector:/app
+    command: watchmedo auto-restart --directory=. --pattern="*.py" --recursive -- python main.py
+
+  graphiti-service:
+    build:
+      context: ./graphiti-service
+      target: development
+    volumes:
+      - ./graphiti-service:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 9622 --reload

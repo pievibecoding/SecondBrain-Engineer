@@ -1,0 +1,14 @@
+[
+  {
+    "query": "Máy dán nhãn báo lỗi giới hạn trục thì xử lý thế nào?",
+    "expected_source_paths": [
+      "/local-nas/projects/Demo/docs/Hướng dẫn vận hành_SATO_V2.docx"
+    ],
+    "expected_terms": [
+      "Lỗi giới hạn trục",
+      "cảm biến hành trình",
+      "reset lỗi"
+    ],
+    "notes": "Use this case to verify that troubleshooting content is present in chunks and retrievable by LightRAG mix mode."
+  }
+]

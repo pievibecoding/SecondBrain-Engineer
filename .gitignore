@@ -1,0 +1,40 @@
+# Local env
+.env
+.env.docker
+
+# LightRAG secrets
+lightrag/.env
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+.pytest_cache/
+
+# Node modules (frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/test-results/
+frontend/tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Generated experiment reports
+docs/experiments/artifacts/**/*.json
+scripts/output_*.txt
+
+# Local NAS test files (real content, not for version control)
+local-nas/
+!local-nas/.gitkeep

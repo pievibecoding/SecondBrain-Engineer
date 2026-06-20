@@ -1,0 +1,29 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  // SecondBrain — Kilo Code Configuration
+  // Tự động load tất cả steering rules từ .kiro/steering/
+  // KHÔNG edit trực tiếp — edit các file trong .kiro/steering/ thay thế
+  "instructions": [
+    // Core project context — luôn load
+    ".kiro/steering/project-context.md",
+
+    // Backend rules — load khi làm việc với Python services
+    ".kiro/steering/backend-rules.md",
+
+    // Frontend rules
+    ".kiro/steering/frontend-rules.md",
+
+    // External service APIs
+    ".kiro/steering/lightrag-api.md",
+    ".kiro/steering/graphiti-api.md",
+
+    // NAS connector
+    ".kiro/steering/nas-rules.md",
+
+    // Test conventions
+    ".kiro/steering/test-conventions.md",
+
+    // Spec creation rules — load khi tạo/review requirements.md
+    ".kiro/steering/spec-creation-rules.md"
+  ]
+}

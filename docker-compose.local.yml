@@ -1,0 +1,46 @@
+# Local development override — no NAS required
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
+#
+# Differences from production:
+# - nas-connector is DISABLED (no /mnt/synology needed)
+# - ./local-nas/ folder is used instead of Synology NAS
+# - All services use Docker-internal hostnames
+
+services:
+  # Disable NAS connector — no SMB mount needed locally
+  nas-connector:
+    profiles:
+      - disabled
+
+  # Backend: use Docker-internal URLs and mount local-nas
+  backend:
+    env_file: .env.docker
+    volumes:
+      - ./local-nas:/local-nas:ro
+      - ./docs:/app/docs
+    # Override to use internal Docker URLs
+    environment:
+      DATABASE_URL: postgresql+asyncpg://secondbrain:${POSTGRES_PASSWORD:-secondbrain}@postgres:5432/secondbrain
+
+  # Postgres: expose on 5433 to avoid conflict with local Windows PostgreSQL on 5432
+  postgres:
+    ports:
+      - "5433:5432"
+
+  # LightRAG: mount local-nas so it can read files by path
+  lightrag:
+    volumes:
+      - ./lightrag/storage:/app/storage
+      - ./prompts:/app/prompts
+      - ./local-nas:/local-nas:ro
+
+  # Graphiti: use Docker-internal DB URL
+  graphiti-service:
+    env_file: .env.docker
+
+  # Frontend: use relative URLs so nginx proxy handles API calls (no CORS)
+  frontend:
+    environment:
+      VITE_API_BASE: ""
