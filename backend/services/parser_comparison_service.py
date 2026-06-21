@@ -19,7 +19,7 @@ from backend.services.evaluation_report_service import REPORT_ID_RE
 
 
 PARSER_REPORT_ID_RE = REPORT_ID_RE
-SUPPORTED_PARSERS = {"pdfplumber", "pymupdf", "docling", "marker"}
+SUPPORTED_PARSERS = {"pdfplumber", "pymupdf", "docling"}
 ARTIFACT_DIR = Path("/app/docs/experiments/artifacts/pdf-parser-comparison")
 
 
@@ -172,29 +172,6 @@ def _parse_with_docling(path: Path) -> dict[str, Any]:
     normalized = _normalize_text(markdown)
     return {
         "parser": "docling",
-        "status": "ok",
-        "source_path": str(path),
-        "text": markdown,
-        "normalized_text": normalized,
-        "pages": [{"page_number": None, "text": markdown, "blocks": []}],
-        "tables": _extract_markdown_tables(normalized) or _detect_table_candidates(normalized),
-        "metadata": {
-            "latency_ms": worker.get("metadata", {}).get("latency_ms", round((time.perf_counter() - started) * 1000, 2)),
-            "parser_version": worker.get("metadata", {}).get("parser_version"),
-        },
-    }
-
-
-def _parse_with_marker(path: Path) -> dict[str, Any]:
-    started = time.perf_counter()
-    worker = _run_external_parser("marker", path, Path("/opt/marker-venv/bin/python"), timeout_seconds=300)
-    if worker.get("status") != "ok":
-        return _external_parse_failed("marker", path, worker, started)
-
-    markdown = str(worker.get("text") or "")
-    normalized = _normalize_text(markdown)
-    return {
-        "parser": "marker",
         "status": "ok",
         "source_path": str(path),
         "text": markdown,
@@ -453,8 +430,6 @@ def _parse(path: Path, parser: str) -> dict[str, Any]:
         return _parse_with_pymupdf(path)
     if parser == "docling":
         return _parse_with_docling(path)
-    if parser == "marker":
-        return _parse_with_marker(path)
     return {
         "parser": parser,
         "status": "unsupported_parser",

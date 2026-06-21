@@ -120,7 +120,7 @@ export function AdminPdfParserComparisonPage() {
   const [runId, setRunId] = useState("ball-screw-parser-comparison");
   const [title, setTitle] = useState("Ball Screw Parser Comparison");
   const [sources, setSources] = useState(defaultSources);
-  const [enabledParsers, setEnabledParsers] = useState<Record<string, boolean>>({ pdfplumber: true, pymupdf: true, docling: true, marker: false });
+  const [enabledParsers, setEnabledParsers] = useState<Record<string, boolean>>({ pdfplumber: true, pymupdf: true, docling: true });
   const [anchors, setAnchors] = useState(defaultAnchors);
   const [candidates, setCandidates] = useState(defaultCandidates);
   const [expectedTerms, setExpectedTerms] = useState(defaultExpectedTerms);
@@ -202,13 +202,13 @@ export function AdminPdfParserComparisonPage() {
           {Object.entries(enabledParsers).map(([parser, enabled]) => (
             <label className="eval-checkbox" key={parser}>
               <input type="checkbox" checked={enabled} onChange={(event) => setEnabledParsers({ ...enabledParsers, [parser]: event.target.checked })} />
-              {parser}{parser === "docling" ? " (slow)" : ""}{parser === "marker" ? " (very slow)" : ""}
+              {parser}{parser === "docling" ? " (slow)" : ""}
             </label>
           ))}
         </div>
         <p className="placeholder">
-          Khuyến nghị: dùng `pdfplumber + pymupdf + docling` để so sánh chất lượng. `marker` rất nặng,
-          có thể timeout sau 5 phút trên máy local.
+          Khuyến nghị: dùng `pdfplumber + pymupdf + docling` để so sánh chất lượng. Marker đã được gỡ khỏi
+          backend image vì quá nặng và không cần cho workflow hiện tại.
         </p>
         <div className="eval-form-grid">
           <label>Semantic anchors<textarea rows={7} value={anchors} onChange={(event) => setAnchors(event.target.value)} /></label>
